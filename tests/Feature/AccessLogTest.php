@@ -22,7 +22,7 @@ class AccessLogTest extends TestCase
     public function test_asset_creation_writes_access_log(): void
     {
         $user = User::factory()->create();
-        $user->assignRole('Administrator');
+        $user->assignRole('admin');
 
         $response = $this->actingAs($user)->post(route('assets.store'), [
             'name' => 'Audit Test Server',
@@ -47,7 +47,7 @@ class AccessLogTest extends TestCase
     public function test_asset_update_and_deletion_writes_access_logs(): void
     {
         $user = User::factory()->create();
-        $user->assignRole('Administrator');
+        $user->assignRole('admin');
 
         $asset = Asset::create([
             'name' => 'Audit Switch',
@@ -87,7 +87,7 @@ class AccessLogTest extends TestCase
     public function test_procurement_actions_write_access_logs(): void
     {
         $user = User::factory()->create();
-        $user->assignRole('Administrator');
+        $user->assignRole('admin');
 
         // Create procurement
         $this->actingAs($user)->post(route('procurements.store'), [

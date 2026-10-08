@@ -128,7 +128,7 @@ class AssetManagementTest extends TestCase
     public function test_administrator_with_delete_permission_can_delete_asset(): void
     {
         $admin = User::factory()->create();
-        $admin->assignRole('Administrator'); // Has delete_asset
+        $admin->assignRole('admin'); // Has delete_asset
 
         $asset = Asset::create([
             'name' => 'Broken Printer',

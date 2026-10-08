@@ -24,8 +24,9 @@ Route::middleware('auth')->group(function () {
 });
 
 // Admin Route Group protected by Spatie role middleware
-Route::middleware(['auth', 'role:admin|Administrator'])->group(function () {
+Route::middleware(['auth', 'role:admin'])->group(function () {
     Route::get('/users/manage', [UserController::class, 'index'])->name('users.manage');
+    Route::post('/users', [UserController::class, 'store'])->name('users.store');
     Route::put('/users/{user}/role', [UserController::class, 'updateRole'])->name('users.update-role');
 
     Route::get('/audit-logs', [AuditLogController::class, 'index'])->name('audit-logs.index');

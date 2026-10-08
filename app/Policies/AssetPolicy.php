@@ -28,7 +28,7 @@ class AssetPolicy
      */
     public function create(User $user): bool
     {
-        return $user->hasAnyRole(['admin', 'Administrator', 'Procurement Officer'])
+        return $user->hasAnyRole(['admin', 'Procurement Officer'])
             || $user->can('create_asset');
     }
 
@@ -38,7 +38,7 @@ class AssetPolicy
     public function update(User $user, Asset $asset): bool
     {
         // Admins and Procurement Officers can edit assets
-        return $user->hasAnyRole(['admin', 'Administrator', 'Procurement Officer'])
+        return $user->hasAnyRole(['admin', 'Procurement Officer'])
             || $user->can('edit_asset');
     }
 
@@ -47,7 +47,7 @@ class AssetPolicy
      */
     public function delete(User $user, Asset $asset): bool
     {
-        return $user->hasAnyRole(['admin', 'Administrator'])
+        return $user->hasRole('admin')
             || $user->can('delete_asset');
     }
 }

@@ -55,8 +55,8 @@ class DashboardTest extends TestCase
         $response = $this->actingAs($user)->get(route('dashboard'));
 
         $response->assertStatus(200);
-        $response->assertSee('Total Assets');
-        $response->assertSee('Total Procurement Records');
+        $response->assertSee('Total Managed Assets');
+        $response->assertSee('Procurement Requests');
         $response->assertSee('Pending');
         $response->assertSee('Approved');
         $response->assertSee('Completed');
@@ -68,7 +68,7 @@ class DashboardTest extends TestCase
     public function test_dashboard_displays_audit_log_link_for_admins(): void
     {
         $admin = User::factory()->create();
-        $admin->assignRole('Administrator');
+        $admin->assignRole('admin');
 
         $response = $this->actingAs($admin)->get(route('dashboard'));
 
@@ -79,11 +79,11 @@ class DashboardTest extends TestCase
     public function test_admin_can_access_audit_logs_page(): void
     {
         $admin = User::factory()->create();
-        $admin->assignRole('Administrator');
+        $admin->assignRole('admin');
 
         $response = $this->actingAs($admin)->get(route('audit-logs.index'));
         $response->assertStatus(200);
-        $response->assertSee('System Audit Logs');
+        $response->assertSee('System Audit Trail');
     }
 
     public function test_non_admin_cannot_access_audit_logs_page(): void

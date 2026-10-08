@@ -77,7 +77,7 @@ class ProcurementController extends Controller
      */
     public function edit(Procurement $procurement): View
     {
-        if (! auth()->user()->can('edit_asset') && ! auth()->user()->hasAnyRole(['admin', 'Administrator', 'Procurement Officer'])) {
+        if (! auth()->user()->can('edit_asset') && ! auth()->user()->hasAnyRole(['admin', 'Procurement Officer'])) {
             abort(403, 'Unauthorized action.');
         }
 
@@ -91,7 +91,7 @@ class ProcurementController extends Controller
      */
     public function update(Request $request, Procurement $procurement): RedirectResponse
     {
-        if (! auth()->user()->can('edit_asset') && ! auth()->user()->hasAnyRole(['admin', 'Administrator', 'Procurement Officer'])) {
+        if (! auth()->user()->can('edit_asset') && ! auth()->user()->hasAnyRole(['admin', 'Procurement Officer'])) {
             abort(403, 'Unauthorized action.');
         }
 

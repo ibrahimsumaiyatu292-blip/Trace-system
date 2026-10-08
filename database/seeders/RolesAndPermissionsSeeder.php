@@ -23,7 +23,6 @@ class RolesAndPermissionsSeeder extends Seeder
             'create_asset',
             'edit_asset',
             'delete_asset',
-            'edit_own_asset',
             'view_reports',
         ];
 
@@ -31,18 +30,9 @@ class RolesAndPermissionsSeeder extends Seeder
             Permission::firstOrCreate(['name' => $permission]);
         }
 
-        // Create roles and assign permissions
-        $roleAdmin = Role::firstOrCreate(['name' => 'Administrator']);
+        // Create the 4 consolidated roles and assign permissions
+        $roleAdmin = Role::firstOrCreate(['name' => 'admin']);
         $roleAdmin->syncPermissions([
-            'manage_users',
-            'create_asset',
-            'edit_asset',
-            'delete_asset',
-            'view_reports',
-        ]);
-
-        $roleAdminShort = Role::firstOrCreate(['name' => 'admin']);
-        $roleAdminShort->syncPermissions([
             'manage_users',
             'create_asset',
             'edit_asset',
@@ -59,11 +49,6 @@ class RolesAndPermissionsSeeder extends Seeder
 
         $roleProjectManager = Role::firstOrCreate(['name' => 'Project Manager']);
         $roleProjectManager->syncPermissions([
-            'view_reports',
-        ]);
-
-        $roleAuditor = Role::firstOrCreate(['name' => 'Viewer/Auditor']);
-        $roleAuditor->syncPermissions([
             'view_reports',
         ]);
 

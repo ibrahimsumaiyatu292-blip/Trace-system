@@ -120,7 +120,7 @@ class AssetOwnershipPolicyTest extends TestCase
     public function test_admin_and_procurement_officer_can_edit_any_asset(): void
     {
         $admin = User::factory()->create();
-        $admin->assignRole('Administrator');
+        $admin->assignRole('admin');
 
         $procurementOfficer = User::factory()->create();
         $procurementOfficer->assignRole('Procurement Officer');

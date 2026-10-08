@@ -39,15 +39,6 @@ class UserManagementRouteTest extends TestCase
 
         $response = $this->actingAs($adminUser)->get('/users/manage');
         $response->assertStatus(200);
-        $response->assertSee('Registered Institutional Accounts');
-    }
-
-    public function test_administrator_users_can_access_user_management(): void
-    {
-        $adminUser = User::factory()->create();
-        $adminUser->assignRole('Administrator');
-
-        $response = $this->actingAs($adminUser)->get('/users/manage');
-        $response->assertStatus(200);
+        $response->assertSee('User & Role Control Panel');
     }
 }

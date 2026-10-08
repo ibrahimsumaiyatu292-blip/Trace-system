@@ -117,7 +117,7 @@ class ProcurementManagementTest extends TestCase
     public function test_admin_can_delete_procurement(): void
     {
         $admin = User::factory()->create();
-        $admin->assignRole('Administrator');
+        $admin->assignRole('admin');
 
         $procurement = Procurement::create([
             'project_name' => 'Cancelled Order',

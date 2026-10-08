@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests\Auth;
 
+use App\Models\AccessLog;
 use Illuminate\Auth\Events\Lockout;
 use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Foundation\Http\FormRequest;
@@ -45,12 +46,33 @@ class LoginRequest extends FormRequest
         if (! Auth::attempt($this->only('email', 'password'), $this->boolean('remember'))) {
             RateLimiter::hit($this->throttleKey());
 
+            $email = (string) $this->input('email');
+
+            $log = AccessLog::create([
+                'user_id' => null,
+                'action' => "Failed login attempt for email: {$email}",
+                'target_table' => 'users',
+                'target_id' => null,
+                'ip_address' => $this->ip(),
+            ]);
+
             throw ValidationException::withMessages([
                 'email' => trans('auth.failed'),
             ]);
         }
 
         RateLimiter::clear($this->throttleKey());
+
+        $user = Auth::user();
+        if ($user) {
+            AccessLog::create([
+                'user_id' => $user->id,
+                'action' => "Successful login for email: {$user->email}",
+                'target_table' => 'users',
+                'target_id' => $user->id,
+                'ip_address' => $this->ip(),
+            ]);
+        }
     }
 
     /**
@@ -81,6 +103,6 @@ class LoginRequest extends FormRequest
      */
     public function throttleKey(): string
     {
-        return Str::transliterate(Str::lower($this->string('email')).'|'.$this->ip());
+        return Str::transliterate(Str::lower($this->input('email')).'|'.$this->ip());
     }
 }
